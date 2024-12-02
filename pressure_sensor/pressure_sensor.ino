@@ -10,6 +10,7 @@
 #define LED_PIN 19           // ESP32 pin GPIO32 for the LED
 #define PRESSURE_THRESHOLD 50 // Threshold below which it's considered "no pressure"
 #define LED_OFF_DELAY 1000    // Delay in milliseconds to keep the LED off
+#define BUZZER_PIN 23
 
 const char* ssid = "bletchley";       // Replace with your Wi-Fi SSID
 const char* password = "laptop!internet"; // Replace with your Wi-Fi password
@@ -17,6 +18,13 @@ const char* serverUrl = "http://10.150.200.129:8080/test"; // Replace with your 
 
 bool sensor1Active = true; // Tracks if Sensor 1 is currently pressed
 bool sensor2Active = true; // Tracks if Sensor 2 is currently pressed
+
+// Function to play a sound (tone) on the buzzer
+void playSound(int note, int duration) {
+  tone(BUZZER_PIN, note, duration);  // Play the note for the specified duration
+  delay(duration);                  // Wait for the note to finish
+  noTone(BUZZER_PIN);                // Stop the tone after the duration
+}
 
 void sendPostRequest() {
   if (WiFi.status() == WL_CONNECTED) { // Check Wi-Fi connection
@@ -92,6 +100,7 @@ void loop() {
     Serial.println("Sensor 2: Pressure released");
     sensor2Active = false; // Update state to "inactive"
     sendPostRequest();
+    playSound(262, 1000);
     controlLED(true); // Turn on the LED
   } else if (!sensor2Active && sensor2Reading >= PRESSURE_THRESHOLD) {
     Serial.println("Sensor 2: Pressure applied");
