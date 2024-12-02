@@ -2,6 +2,8 @@
    ESP32 code: LED control with delay and pressure detection for sensor 2
    Modified to show a message when pressure is back on sensor 2.
 */
+#include <WiFi.h>
+#include <HTTPClient.h>
 
 #define FORCE_SENSOR_1_PIN 33 // ESP32 pin GPIO33 (ADC1 channel)
 #define FORCE_SENSOR_2_PIN 34 // ESP32 pin GPIO34 (ADC1 channel)
@@ -9,8 +11,41 @@
 #define PRESSURE_THRESHOLD 50 // Threshold below which it's considered "no pressure"
 #define LED_OFF_DELAY 2000    // Delay in milliseconds to keep the LED off
 
+const char* ssid = "bletchley";       // Replace with your Wi-Fi SSID
+const char* password = "laptop!internet"; // Replace with your Wi-Fi password
+const char* serverUrl = "http://10.150.200.129:8080/test"; // Replace with your API endpoint
+
 bool sensor1Active = true; // Tracks if Sensor 1 is currently pressed
 bool sensor2Active = true; // Tracks if Sensor 2 is currently pressed
+
+void sendPostRequest() {
+  if (WiFi.status() == WL_CONNECTED) { // Check Wi-Fi connection
+    HTTPClient http;
+    http.begin(serverUrl);
+
+    // Set request headers and payload
+    http.addHeader("Content-Type", "application/json");
+    String payload = "{\"sensor\":\"sensor2\", \"status\":\"released\"}";
+    
+    // Send POST request
+    int httpResponseCode = http.POST(payload);
+
+    // Log response
+    if (httpResponseCode > 0) {
+      Serial.println("POST request sent successfully.");
+      Serial.print("Response code: ");
+      Serial.println(httpResponseCode);
+    } else {
+      Serial.println("Error in sending POST request.");
+      Serial.print("Error code: ");
+      Serial.println(httpResponseCode);
+    }
+
+    http.end(); // Close connection
+  } else {
+    Serial.println("Wi-Fi not connected.");
+  }
+}
 
 void controlLED(bool state) {
   if (state) {
@@ -24,6 +59,18 @@ void controlLED(bool state) {
 void setup() {
   Serial.begin(9600);
   pinMode(LED_PIN, OUTPUT); // Set the LED pin as an output
+
+    // Connect to Wi-Fi
+  Serial.print("Connecting to Wi-Fi...");
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.print(".");
+  }
+  Serial.println("\nConnected to Wi-Fi!");
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
 }
 
 void loop() {
@@ -44,6 +91,7 @@ void loop() {
   if (sensor2Active && sensor2Reading < PRESSURE_THRESHOLD) {
     Serial.println("Sensor 2: Pressure released");
     sensor2Active = false; // Update state to "inactive"
+    sendPostRequest();
     controlLED(true); // Turn on the LED
   } else if (!sensor2Active && sensor2Reading >= PRESSURE_THRESHOLD) {
     Serial.println("Sensor 2: Pressure applied");
