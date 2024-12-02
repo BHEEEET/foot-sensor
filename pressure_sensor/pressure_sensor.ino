@@ -9,7 +9,7 @@
 #define FORCE_SENSOR_2_PIN 34 // ESP32 pin GPIO34 (ADC1 channel)
 #define LED_PIN 19           // ESP32 pin GPIO32 for the LED
 #define PRESSURE_THRESHOLD 50 // Threshold below which it's considered "no pressure"
-#define LED_OFF_DELAY 2000    // Delay in milliseconds to keep the LED off
+#define LED_OFF_DELAY 1000    // Delay in milliseconds to keep the LED off
 
 const char* ssid = "bletchley";       // Replace with your Wi-Fi SSID
 const char* password = "laptop!internet"; // Replace with your Wi-Fi password
@@ -25,7 +25,7 @@ void sendPostRequest() {
 
     // Set request headers and payload
     http.addHeader("Content-Type", "application/json");
-    String payload = "{\"sensor\":\"sensor2\", \"status\":\"released\"}";
+    String payload = "{\"id\":1, \"sensor\":\"back\", \"pressure\": False}";
     
     // Send POST request
     int httpResponseCode = http.POST(payload);
