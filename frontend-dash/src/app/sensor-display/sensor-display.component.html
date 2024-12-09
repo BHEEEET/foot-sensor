@@ -1,0 +1,8 @@
+<div *ngIf="sensorData">
+    <h2>Sensor Data</h2>
+    <pre>{{ sensorData | json }}</pre>
+  </div>
+  <div *ngIf="!sensorData">
+    <p>Loading data...</p>
+</div>
+  
