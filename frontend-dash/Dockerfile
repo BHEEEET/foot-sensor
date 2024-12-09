@@ -7,6 +7,7 @@ WORKDIR /app
 # Install Angular CLI globally
 RUN npm install -g @angular/cli@18.0.0
 
+# Disable Google Analystics Pop-up
 ENV NG_CLI_ANALYTICS false
 
 # Copy the application code

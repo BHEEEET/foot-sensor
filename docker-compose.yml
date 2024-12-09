@@ -13,7 +13,7 @@ services:
 
   frontend:
     build:
-      context: ./dashboard
+      context: ./frontend-dash
       dockerfile: Dockerfile
     container_name: angular_app
     ports:
