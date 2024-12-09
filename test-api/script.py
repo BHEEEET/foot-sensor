@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
 import os
+import datetime 
 
 app = Flask(__name__)
 
@@ -13,8 +14,12 @@ collection = db["sensor"]  # Replace with your collection name
 @app.route('/api/data', methods=['POST'])
 def save_data():
     data = request.json
+    
     if not data:
         return jsonify({"error": "Invalid or missing JSON data"}), 400
+    
+    time_stamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    data["timestamp"] = time_stamp
 
     collection.insert_one(data)
     return jsonify({"message": "Data saved successfully"}), 200
