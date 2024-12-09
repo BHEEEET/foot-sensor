@@ -14,7 +14,7 @@
 
 const char* ssid = "bletchley";       // Replace with your Wi-Fi SSID
 const char* password = "laptop!internet"; // Replace with your Wi-Fi password
-const char* serverUrl = "http://10.150.200.129:8080/test"; // Replace with your API endpoint
+const char* serverUrl = "http://10.150.198.239:5000/test"; // Replace with your API endpoint
 
 bool sensor1Active = true; // Tracks if Sensor 1 is currently pressed
 bool sensor2Active = true; // Tracks if Sensor 2 is currently pressed
@@ -30,10 +30,14 @@ void sendPostRequest() {
   if (WiFi.status() == WL_CONNECTED) { // Check Wi-Fi connection
     HTTPClient http;
     http.begin(serverUrl);
+        
+    // Get the timestamp using millis()
+    unsigned long timestamp = millis();
 
     // Set request headers and payload
     http.addHeader("Content-Type", "application/json");
-    String payload = "{\"id\":1, \"sensor\":\"back\", \"pressure\": False}";
+    String payload = "{\"id\":1, \"sensor_value\": false, \"sensor\": \"back\"}";
+
     
     // Send POST request
     int httpResponseCode = http.POST(payload);
@@ -58,7 +62,6 @@ void sendPostRequest() {
 void controlLED(bool state) {
   if (state) {
     digitalWrite(LED_PIN, HIGH); // Turn on the LED
-    delay(LED_OFF_DELAY);        // Wait before allowing it to turn back on
   } else {
     digitalWrite(LED_PIN, LOW);  // Turn off the LED
   }
