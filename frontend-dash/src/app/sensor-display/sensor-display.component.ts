@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { SensorDataService } from '../sensor-data.service';
 
 @Component({
   selector: 'app-sensor-display',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule],
   templateUrl: './sensor-display.component.html',
   styleUrl: './sensor-display.component.css'
 })
