@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
 import { SensorDataService } from '../sensor-data.service';
 
 @Component({
