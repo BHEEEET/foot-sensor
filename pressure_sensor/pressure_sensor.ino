@@ -5,16 +5,16 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-#define FORCE_SENSOR_1_PIN 33 // ESP32 pin GPIO33 (ADC1 channel)
-#define FORCE_SENSOR_2_PIN 34 // ESP32 pin GPIO34 (ADC1 channel)
-#define LED_PIN 19           // ESP32 pin GPIO32 for the LED
+#define FORCE_SENSOR_1_PIN 34 // ESP32 pin GPIO33 (ADC1 channel)
+#define FORCE_SENSOR_2_PIN 35 // ESP32 pin GPIO34 (ADC1 channel)
 #define PRESSURE_THRESHOLD 50 // Threshold below which it's considered "no pressure"
-#define LED_OFF_DELAY 1000    // Delay in milliseconds to keep the LED off
-#define BUZZER_PIN 23
+#define BUZZER_PIN 21
 
 const char* ssid = "bletchley";       // Replace with your Wi-Fi SSID
 const char* password = "laptop!internet"; // Replace with your Wi-Fi password
-const char* serverUrl = "http://10.150.198.239:5000/test"; // Replace with your API endpoint
+
+// NIET VERGETEN DE IP ADDRESS TE VERANDEREN
+const char* serverUrl = "http://10.150.200.129:8080/api/data"; // Replace with your API endpoint
 
 bool sensor1Active = true; // Tracks if Sensor 1 is currently pressed
 bool sensor2Active = true; // Tracks if Sensor 2 is currently pressed
@@ -59,18 +59,8 @@ void sendPostRequest() {
   }
 }
 
-void controlLED(bool state) {
-  if (state) {
-    digitalWrite(LED_PIN, HIGH); // Turn on the LED
-  } else {
-    digitalWrite(LED_PIN, LOW);  // Turn off the LED
-  }
-}
-
 void setup() {
   Serial.begin(9600);
-  pinMode(LED_PIN, OUTPUT); // Set the LED pin as an output
-
     // Connect to Wi-Fi
   Serial.print("Connecting to Wi-Fi...");
   WiFi.begin(ssid, password);
@@ -104,11 +94,9 @@ void loop() {
     sensor2Active = false; // Update state to "inactive"
     sendPostRequest();
     playSound(262, 1000);
-    controlLED(true); // Turn on the LED
   } else if (!sensor2Active && sensor2Reading >= PRESSURE_THRESHOLD) {
     Serial.println("Sensor 2: Pressure applied");
     sensor2Active = true; // Update state to "active"
-    controlLED(false); // Turn off the LED with a delay
   }
 
   delay(100); // Small delay for stability
