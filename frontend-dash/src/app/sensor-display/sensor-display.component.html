@@ -1,46 +1,53 @@
-<div class="sensor-display">
-  <h1>Sensor Data</h1>
-  <table class="sensor-table">
-    <thead>
-      <tr>
-        <th>Datum</th>
-        <th>Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Iterate over sensor data and create a row for each item -->
-      <tr *ngFor="let data of dataCount">
-        <td>{{ data._id }}</td>
-        <td>{{ data.count }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <!-- Check if sensor data is available and display the detailed table -->
-  <div *ngIf="sensorData; else loading">
-    <h2>Sensor Data</h2>
-    <table class="sensor-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Sensor</th>
-          <th>Value</th>
-          <th>Timestamp</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Iterate over sensor data and create a row for each item -->
-        <tr *ngFor="let data of sensorData">
-          <td>{{ data.id }}</td>
-          <td>{{ data.sensor }}</td>
-          <td>{{ data.sensor_value }}</td>
-          <td>{{ data.timestamp }}</td>
-        </tr>
-      </tbody>
-    </table>
+<div class="container">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-brand">Sensor Data</div>
+    <div class="navbar-buttons">
+      <button class="navbar-button" routerLink="/" routerLinkActive="active">Home</button>
+      <button class="navbar-button" routerLink="/about" routerLinkActive="active">About</button>
+      <button class="navbar-button" routerLink="/contact" routerLinkActive="active">Contact</button>
+    </div>
+  </nav>
+
+  <div *ngIf="sensorData && dataCount; else loading">
+    <!-- Main content -->
+    <div class="sensor-display">
+      <h1>Dagelijkse Data</h1>
+
+      <!-- Summary Table -->
+      <table class="sensor-summary">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of dataCount">
+            <td>{{ data._id }}</td>
+            <td>{{ data.count }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Sensor Log</h2>
+      <div class="sensor-log">
+        <!-- Iterate over sensor data and display each entry in one line -->
+        <div *ngFor="let data of sensorData" class="log-entry">
+          <span class="timestamp">{{ data.timestamp }}</span>
+          <span class="sensor">{{ data.sensor }}</span>
+          <span class="value">{{ data.sensor_value }}</span>
+          <span class="id">ID: {{ data.id }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Define the loading template here -->
+  <!-- Loading Message with Spinner -->
   <ng-template #loading>
-    <p>Loading sensor data...</p>
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading sensor data...</p>
+    </div>
   </ng-template>
 </div>

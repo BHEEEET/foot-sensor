@@ -26,13 +26,14 @@ export class SensorDisplayComponent implements OnInit {
   getSensorData(): void {
     this.sensorDataService.getSensorData().subscribe(
       (data) => {
-        this.sensorData = data; // Assign the fetched data to the component property
+        this.sensorData = data.reverse(); // Reverse the order
       },
       (error) => {
         console.error('Error fetching sensor data:', error);
       }
     );
   }
+  
 
   getDataCount(): void {
     this.sensorDataService.getDataCount().subscribe(

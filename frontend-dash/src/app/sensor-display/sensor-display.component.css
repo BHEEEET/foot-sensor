@@ -1,27 +1,204 @@
-.sensor-display {
+/* Global container */
+.container {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fb; /* Soft light gray background */
+    min-height: 100vh;
+  }
+  
+ /* Navbar */
+ .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(45deg, #00695c, #004d40);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #004d40;
+  }
+  
+  .navbar-brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+  }
+  
+  .navbar-buttons {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navbar-button {
+    background-color: #ffffff;
+    color: #00796b;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: 2px solid #ffffff;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-button:hover {
+    background: linear-gradient(45deg, #00796b, #004d40);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    border: 2px solid #004d40;
+  }
+  
+  .navbar-button:active {
+    transform: scale(1.05);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .navbar-button.active {
+    background: #004d40;
+    color: white;
+    border: 2px solid #004d40;
+  }
+  
+  .navbar-button:focus {
+    outline: none;
+  }
+  
+  /* Sensor Data Display */
+  .sensor-display {
     padding: 1rem;
-    font-family: Arial, sans-serif;
+    max-width: 1000px;
+    margin: 2rem auto;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
   }
   
-  .sensor-table {
+  /* Header styling */
+  h1, h2 {
+    color: #333;
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  h1 {
+    color: #00796b;
+  }
+  
+  /* Sensor Summary Table */
+  .sensor-summary {
     width: 100%;
-    border-collapse: collapse;
     margin-top: 1rem;
+    border-collapse: collapse;
+    font-size: 1rem;
   }
   
-  .sensor-table th, 
-  .sensor-table td {
+  .sensor-summary th,
+  .sensor-summary td {
     border: 1px solid #ccc;
     padding: 0.5rem;
     text-align: left;
   }
   
-  .sensor-table th {
-    background-color: #f4f4f4;
+  .sensor-summary th {
+    background-color: #e0f2f1;
     font-weight: bold;
   }
   
-  .sensor-table tr:nth-child(even) {
+  .sensor-summary tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+  
+  /* Sensor Log Styling */
+  .sensor-log {
+    height: 250px; /* Set a smaller log height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    margin-top: 1rem;
     background-color: #f9f9f9;
+    padding: 0.1 rem 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .log-entry {
+    font-size: 1rem;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem; /* Reduced margin */
+    padding: 0.3rem 0; /* Reduced padding */
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .log-entry:last-child {
+    border-bottom: none;
+  }
+  
+  /* Highlight different parts of the log */
+  .timestamp {
+    color: #0288d1; /* Blue for timestamp */
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  
+  .sensor {
+    color: #388e3c; /* Green for sensor name */
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  .value {
+    color: #f57c00; /* Orange for sensor value */
+    font-size: 1rem;
+  }
+  
+  .id {
+    color: #757575; /* Dark gray for ID */
+    font-size: 0.9rem;
+    text-align: right;
+  }
+  
+  /* Loading Text */
+  ng-template {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+    margin-top: 1.5rem;
+  }
+  
+  /* Loading spinner */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 3rem;
+    text-align: center;
+  }
+  
+  .spinner {
+    border: 8px solid #f3f3f3; /* Light gray background */
+    border-top: 8px solid #00796b; /* Green for the spinner */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+  
+  /* Spinner animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Loading text */
+  .loading-container p {
+    font-size: 1.2rem;
+    color: #00796b;
+    font-weight: bold;
+    margin-top: 0.5rem;
   }
   
