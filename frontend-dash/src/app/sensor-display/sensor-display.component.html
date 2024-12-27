@@ -1,7 +1,23 @@
 <div class="sensor-display">
   <h1>Sensor Data</h1>
-  <!-- Check if sensor data is available -->
+  <table class="sensor-table">
+    <thead>
+      <tr>
+        <th>Datum</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Iterate over sensor data and create a row for each item -->
+      <tr *ngFor="let data of dataCount">
+        <td>{{ data._id }}</td>
+        <td>{{ data.count }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Check if sensor data is available and display the detailed table -->
   <div *ngIf="sensorData; else loading">
+    <h2>Sensor Data</h2>
     <table class="sensor-table">
       <thead>
         <tr>

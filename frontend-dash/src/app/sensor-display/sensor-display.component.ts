@@ -11,11 +11,13 @@ import { SensorDataService } from '../sensor-data.service'; // Import the servic
 })
 export class SensorDisplayComponent implements OnInit {
   sensorData: any; // This will hold the fetched data
+  dataCount: any;
 
   constructor(private sensorDataService: SensorDataService) {}
 
   ngOnInit(): void {
     this.getSensorData();
+    this.getDataCount();
   }
 
   /**
@@ -25,6 +27,17 @@ export class SensorDisplayComponent implements OnInit {
     this.sensorDataService.getSensorData().subscribe(
       (data) => {
         this.sensorData = data; // Assign the fetched data to the component property
+      },
+      (error) => {
+        console.error('Error fetching sensor data:', error);
+      }
+    );
+  }
+
+  getDataCount(): void {
+    this.sensorDataService.getDataCount().subscribe(
+      (data) => {
+        this.dataCount = data; // Assign the fetched data to the component property
       },
       (error) => {
         console.error('Error fetching sensor data:', error);
