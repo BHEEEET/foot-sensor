@@ -1,8 +1,30 @@
-<div *ngIf="sensorData">
-    <h2>Sensor Data</h2>
-    <pre>{{ sensorData | json }}</pre>
+<div class="sensor-display">
+  <h1>Sensor Data</h1>
+  <!-- Check if sensor data is available -->
+  <div *ngIf="sensorData; else loading">
+    <table class="sensor-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Sensor</th>
+          <th>Value</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Iterate over sensor data and create a row for each item -->
+        <tr *ngFor="let data of sensorData">
+          <td>{{ data.id }}</td>
+          <td>{{ data.sensor }}</td>
+          <td>{{ data.sensor_value }}</td>
+          <td>{{ data.timestamp }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <div *ngIf="!sensorData">
-    <p>Loading data...</p>
+
+  <!-- Define the loading template here -->
+  <ng-template #loading>
+    <p>Loading sensor data...</p>
+  </ng-template>
 </div>
-  

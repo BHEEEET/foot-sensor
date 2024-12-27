@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SensorDataService } from '../sensor-data.service';
+import { CommonModule } from '@angular/common'; // To use Angular directives like `ngIf`, `ngFor`
+import { SensorDataService } from '../sensor-data.service'; // Import the service
 
 @Component({
   selector: 'app-sensor-display',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule], // Import modules directly
   templateUrl: './sensor-display.component.html',
-  styleUrl: './sensor-display.component.css'
+  styleUrls: ['./sensor-display.component.css'],
 })
 export class SensorDisplayComponent implements OnInit {
-  sensorData: any;
+  sensorData: any; // This will hold the fetched data
 
   constructor(private sensorDataService: SensorDataService) {}
 
@@ -18,9 +18,17 @@ export class SensorDisplayComponent implements OnInit {
     this.getSensorData();
   }
 
+  /**
+   * Fetches sensor data using the SensorDataService.
+   */
   getSensorData(): void {
-    this.sensorDataService.getSensorData().subscribe(data => {
-      this.sensorData = data;
-    });
+    this.sensorDataService.getSensorData().subscribe(
+      (data) => {
+        this.sensorData = data; // Assign the fetched data to the component property
+      },
+      (error) => {
+        console.error('Error fetching sensor data:', error);
+      }
+    );
   }
 }

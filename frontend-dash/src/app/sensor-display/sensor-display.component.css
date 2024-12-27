@@ -1,0 +1,27 @@
+.sensor-display {
+    padding: 1rem;
+    font-family: Arial, sans-serif;
+  }
+  
+  .sensor-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  .sensor-table th, 
+  .sensor-table td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    text-align: left;
+  }
+  
+  .sensor-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .sensor-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
