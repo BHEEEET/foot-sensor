@@ -33,5 +33,39 @@ def get_data():
     documents = list(collection.find({}, {"_id": 0}))
     return jsonify(documents), 200
 
+@app.route('/api/data/count', methods=['GET'])
+def get_data_count():
+    # Aggregation query to count occurrences of sensor_value per day
+    pipeline = [
+        {
+            "$project": {
+                "date": {
+                    "$dateToString": {
+                        "format": "%Y-%m-%d",
+                        "date": {
+                            "$toDate": "$timestamp"  # Convert to date if it's not already in Date format
+                        }
+                    }
+                },
+                "sensor_value": 1
+            }
+        },
+        {
+            "$group": {
+                "_id": "$date",
+                "count": {"$sum": 1}
+            }
+        },
+        {
+            "$sort": {"_id": 1}  # Sort by date (ascending)
+        }
+    ]
+    
+    # Perform aggregation query
+    result = list(collection.aggregate(pipeline))
+    
+    return jsonify(result), 200
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
