@@ -33,8 +33,8 @@ export class SensorDisplayComponent implements OnInit {
       }
     );
   }
-  
 
+  
   getDataCount(): void {
     this.sensorDataService.getDataCount().subscribe(
       (data) => {

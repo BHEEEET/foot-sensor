@@ -1,14 +1,4 @@
 <div class="container">
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="navbar-brand">Sensor Data</div>
-    <div class="navbar-buttons">
-      <button class="navbar-button" routerLink="/" routerLinkActive="active">Home</button>
-      <button class="navbar-button" routerLink="/about" routerLinkActive="active">About</button>
-      <button class="navbar-button" routerLink="/contact" routerLinkActive="active">Contact</button>
-    </div>
-  </nav>
-
   <div *ngIf="sensorData && dataCount; else loading">
     <!-- Main content -->
     <div class="sensor-display">
@@ -29,7 +19,10 @@
           </tr>
         </tbody>
       </table>
+    </div>
 
+    <!-- Sensor Log -->
+    <div class="sensor-log-container">
       <h2>Sensor Log</h2>
       <div class="sensor-log">
         <!-- Iterate over sensor data and display each entry in one line -->
@@ -37,7 +30,7 @@
           <span class="timestamp">{{ data.timestamp }}</span>
           <span class="sensor">{{ data.sensor }}</span>
           <span class="value">{{ data.sensor_value }}</span>
-          <span class="id">ID: {{ data.id }}</span>
+          <span class="id">id:{{ data.id }}</span>
         </div>
       </div>
     </div>
