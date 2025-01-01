@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 html{
-    background-color: #d9d9d9;
+    background-color: #f4f4f4;
+}
+
+body {
+    border: 0;
+    margin: 0;
 }
 
 /* Navbar */
@@ -8,7 +13,7 @@ html{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0.5rem 2rem;
     background: linear-gradient(45deg, #00695c, #004d40);
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -17,7 +22,7 @@ html{
 }
 
 .navbar-brand {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: bold;
     letter-spacing: 1.5px;
 }
@@ -30,7 +35,7 @@ html{
 .navbar-button {
     background-color: #ffffff;
     color: #00796b;
-    padding: 0.8rem 1.5rem;
+    padding: 0.5rem 1.5rem;
     font-size: 1.1rem;
     font-weight: 500;
     border: 2px solid #ffffff;
@@ -38,6 +43,7 @@ html{
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
 }
 
 .navbar-button:hover {
@@ -61,4 +67,50 @@ html{
 
 .navbar-button:focus {
     outline: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .navbar-buttons {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .navbar-button {
+        width: 100%;
+        text-align: center;
+        padding: 0.6rem 1rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.8rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .navbar-buttons {
+        gap: 5px;
+    }
+
+    .navbar-button {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.9rem;
+    }
 }
