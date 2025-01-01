@@ -7,7 +7,7 @@
 
 #define FORCE_SENSOR_1_PIN 34 // ESP32 pin GPIO33 (ADC1 channel)
 #define FORCE_SENSOR_2_PIN 35 // ESP32 pin GPIO34 (ADC1 channel)
-#define PRESSURE_THRESHOLD 50 // Threshold below which it's considered "no pressure"
+#define PRESSURE_THRESHOLD 20 // Threshold below which it's considered "no pressure"
 #define BUZZER_PIN 21
 
 // const char* ssid = "bletchley";       // Replace with your Wi-Fi SSID
@@ -15,7 +15,7 @@
 
 
 // NIET VERGETEN DE IP ADDRESS TE VERANDEREN
-const char* serverUrl = "http://192.168.129.57:8080/api/data"; // Replace with your API endpoint
+const char* serverUrl = "http://192.168.0.20:8080/api/data"; // Replace with your API endpoint
 
 bool sensor1Active = true; // Tracks if Sensor 1 is currently pressed
 bool sensor2Active = true; // Tracks if Sensor 2 is currently pressed
@@ -63,21 +63,32 @@ void sendPostRequest() {
 
 void setup() {
   Serial.begin(9600);
-    // Connect to Wi-Fi
+  pinMode(BUZZER_PIN, OUTPUT);  // Ensure the buzzer pin is set to output
+
+  // Connect to Wi-Fi
   Serial.print("Connecting to Wi-Fi...");
   WiFi.begin(ssid, password);
-
-  while (WiFi.status() != WL_CONNECTED) {
+  int attempts = 0;
+  
+  while (WiFi.status() != WL_CONNECTED && attempts < 10) {  // Retry up to 10 times
     delay(1000);
     Serial.print(".");
+    attempts++;
   }
-  Serial.println("\nConnected to Wi-Fi!");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
+
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.println("\nConnected to Wi-Fi!");
+    Serial.print("IP address: ");
+    Serial.println(WiFi.localIP());
+  } else {
+    Serial.println("\nFailed to connect to Wi-Fi after 10 attempts.");
+    // Handle failure (e.g., go into a safe mode)
+  }
 }
 
+
 unsigned long sensor2ReleaseTime = 0;  // Time when sensor 2 was last released
-const unsigned long PRESSURE_RELEASE_TIME = 4000; // 3 seconds
+const unsigned long PRESSURE_RELEASE_TIME = 3000; // 3 seconds
 bool postRequestSent = false; // Flag to track if post request has been sent
 
 void loop() {
@@ -94,22 +105,23 @@ void loop() {
     sensor1Active = true; // Update state to "active"
   }
 
-  // Check Sensor 2 and control the LED
+  // Check Sensor 2 
   if (sensor2Active && sensor2Reading < PRESSURE_THRESHOLD) {
     Serial.println("Sensor 2: Pressure released");
     sensor2Active = false; // Update state to "inactive"
     sensor2ReleaseTime = millis();  // Start counting release time
   } else if (!sensor2Active && sensor2Reading >= PRESSURE_THRESHOLD) {
+    Serial.println(sensor2Reading);
     Serial.println("Sensor 2: Pressure applied");
     sensor2Active = true; // Update state to "active"
     postRequestSent = false;
     
     // Reset timer when pressure is applied again
-    if (millis() - sensor2ReleaseTime >= PRESSURE_RELEASE_TIME) {
-      // If pressure was released for 3 seconds, perform actions
-      sendPostRequest();
-      playSound(262, 1000);
-    }
+    // if (millis() - sensor2ReleaseTime >= PRESSURE_RELEASE_TIME) {
+    //   // If pressure was released for 3 seconds, perform actions
+    //   sendPostRequest();
+    //   playSound(262, 1000);
+    // }
   }
 
   // Check if sensor 2 has been released for 3 seconds
