@@ -1,162 +1,85 @@
-/* Global container */
-.container {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f7fb;
-    /* Soft light gray background */
-    min-height: 90vh;
-    position: relative;
-}
-
-/* Sensor Data Display */
-.sensor-display {
-    padding: 1rem;
-    max-width: 800px;
-    margin: 2rem auto;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-/* Header styling */
-h1,
-h2 {
-    color: #333;
-    text-align: center;
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-}
-
-h1 {
-    color: #00796b;
-}
-
-/* Sensor Summary Table */
-.sensor-summary {
-    width: 100%;
-    margin-top: 1rem;
-    border-collapse: collapse;
-    font-size: 1rem;
-}
-
-.sensor-summary th,
-.sensor-summary td {
-    border: 1px solid #ccc;
-    padding: 0.5rem;
-    text-align: left;
-}
-
-.sensor-summary th {
-    background-color: #e0f2f1;
-    font-weight: bold;
-}
-
-.sensor-summary tr:nth-child(even) {
-    background-color: #fafafa;
-}
-
-/* Sensor Log Container */
-.sensor-log-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding: 1rem;
-    max-width: 300px;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px 8px 0 0;
-    width: 300px;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-/* Sensor Log Table */
-.sensor-log {
-    width: 100%;
-    margin-top: 1rem;
-    border-collapse: collapse;
-    font-size: 0.85rem;
-    background-color: #fafafa;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.sensor-log th,
-.sensor-log td {
-    border: 1px solid #e0e0e0;
-    padding: 0.5rem;
-    text-align: left;
-}
-
-.sensor-log th {
-    background-color: #e0f2f1;
-    font-weight: bold;
-}
-
-.log-entry td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #333;
-}
-
-.log-entry .sensor {
-    color: #2e7d32;
-}
-
-.log-entry .value {
-    color: #e60000;
-}
-
-.log-entry .id {
-    color: #6d6d6d;
-    font-weight: bold;
-}
-
-/* Loading Text */
-ng-template {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #888;
-    margin-top: 1.5rem;
-}
-
-/* Loading spinner */
-.loading-container {
+/* Navbar */
+.navbar {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    flex-direction: column;
-    margin-top: 3rem;
-    text-align: center;
+    padding: 0.5rem 2rem;
+    background: linear-gradient(45deg, #00695c, #004d40);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #004d40;
+    font-family: 'Arial', sans-serif;
 }
 
-.spinner {
-    border: 8px solid #f3f3f3;
-    /* Light gray background */
-    border-top: 8px solid #00796b;
-    /* Green for the spinner */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin-bottom: 1rem;
-}
-
-/* Spinner animation */
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* Loading text */
-.loading-container p {
-    font-size: 1.2rem;
-    color: #00796b;
+.navbar-brand {
+    font-size: 1.5rem;
     font-weight: bold;
-    margin-top: 0.5rem;
+    letter-spacing: 1.5px;
+    display: flex; /* Ensure flexibility for centering */
+    align-items: center; /* Center text and logo vertically */
 }
+
+.navbar-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-button {
+    background-color: #ffffff;
+    color: #00796b;
+    padding: 0.5rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: 2px solid #ffffff;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.navbar-button:hover {
+    background: linear-gradient(45deg, #00796b, #004d40);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    border: 2px solid #004d40;
+}
+
+.navbar-button:active {
+    transform: scale(1.05);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-button.active {
+    background: #004d40;
+    color: white;
+    border: 2px solid #004d40;
+}
+
+.navbar-button:focus {
+    outline: none;
+}
+
+/* Logo */
+
+nav .logo {
+    float: left;
+    margin-right: 1rem;
+}
+
+nav .logo img {
+    height: 55px;
+    vertical-align: middle;
+}
+
+nav .logo:active{
+    opacity: 0.7;
+    transform: scale(0.95); /* Slightly shrink the logo on click */
+}
+
+nav .logo img:hover {
+    cursor:pointer;
+    transform: scale(1.05); /* Slightly enlarge the logo on hover */
+}
+

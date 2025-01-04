@@ -12,7 +12,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    max-width: 500px;
+    max-width: 30vw;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px 8px 0 0;
@@ -20,7 +20,7 @@
 }
 
 .sensor-table {
-    width: 100%;
+    width: 19vw;
     margin-top: 1rem;
     border-collapse: collapse;
     font-size: 10px;
@@ -54,6 +54,7 @@ h2 {
     margin-top: 1rem;
     border-collapse: collapse;
     font-size: 1rem;
+    overflow-y: auto;
 }
 
 .sensor-table th,
@@ -87,7 +88,7 @@ h2 {
 
 /* Sensor Log Styling */
 .sensor-log {
-    max-height: 6vh;
+    max-height: 15vh;
     overflow-y: auto;
     font-family: Arial, sans-serif;
     border: 1px solid #ccc; /* Optional: Add a border for emphasis */
