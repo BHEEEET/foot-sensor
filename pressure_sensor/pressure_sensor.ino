@@ -14,8 +14,6 @@
 // const char* ssid = "bletchley";       // Replace with your Wi-Fi SSID
 // const char* password = "laptop!internet"; // Replace with your Wi-Fi password
 
-const char *ssid = "Proximus-Home-327354";
-const char *password = "b2pjy9sy7yh6a4e7";
 const char *serverUrl = "http://192.168.129.57:8080/api/data";
 const char *rewardServerUrl = "http://192.168.129.57:8080/api/reward";
 
