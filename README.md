@@ -1,5 +1,7 @@
 # Foot Sensor
 
+![Frontend Image](./files/website-foot.png)
+
 ## Overzicht
 Het Foot Sensor-project combineert hardware en software om de druk op je voeten te monitoren, met feedback en analyses. Het omvat:
 - Een dashboard om gegevens van de druksensoren weer te geven.
