@@ -65,6 +65,53 @@ def get_data_count():
     
     return jsonify(result), 200
 
+@app.route('/api/data/user-count', methods=['GET'])
+def get_user_daily_count():
+    # Aggregation query to format and count occurrences per user per day
+    pipeline = [
+        {
+            "$project": {
+                "date": {
+                    "$dateToString": {
+                        "format": "%Y-%m-%d",
+                        "date": {"$toDate": "$timestamp"}
+                    }
+                },
+                "name": 1
+            }
+        },
+        {
+            "$group": {
+                "_id": {"date": "$date", "name": "$name"},
+                "count": {"$sum": 1}
+            }
+        },
+        {
+            "$group": {
+                "_id": "$_id.date",
+                "users": {
+                    "$push": {
+                        "user": "$_id.name",
+                        "count": "$count"
+                    }
+                }
+            }
+        },
+        {"$sort": {"_id": 1}}  # Sort by date
+    ]
+
+    # Perform aggregation query
+    result = list(sensor_collection.aggregate(pipeline))
+
+    # Format the final response
+    final_result = [
+        {"date": item["_id"], "users": item["users"]}
+        for item in result
+    ]
+
+    return jsonify(final_result), 200
+
+
 @app.route('/api/reward', methods=['GET'])
 def get_rewards():
     # Fetch all reward records
