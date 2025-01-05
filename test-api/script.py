@@ -83,5 +83,68 @@ def handle_reward():
     
     return jsonify({"message": "Reward granted successfully"}), 200
 
+@app.route('/api/reward/total', methods=['GET'])
+def get_total_rewards():
+    # Aggregate total points per user
+    pipeline = [
+        {
+            "$group": {
+                "_id": "$user",
+                "total_points": {"$sum": "$points"}
+            }
+        },
+        {
+            "$project": {
+                "user": "$_id",
+                "total_points": 1,
+                "_id": 0
+            }
+        }
+    ]
+
+    totals = list(reward_collection.aggregate(pipeline))
+
+    return jsonify(totals), 200
+
+@app.route('/api/reward/total-per-day', methods=['GET'])
+def get_total_rewards_per_day():
+    # Aggregate total points per day with users listed under each date
+    pipeline = [
+        {
+            "$group": {
+                "_id": {
+                    "user": "$user",
+                    "date": {"$substr": ["$timestamp", 0, 10]}
+                },
+                "total_points": {"$sum": "$points"}
+            }
+        },
+        {
+            "$group": {
+                "_id": "$_id.date",
+                "users": {
+                    "$push": {
+                        "user": "$_id.user",
+                        "total_points": "$total_points"
+                    }
+                }
+            }
+        },
+        {
+            "$project": {
+                "date": "$_id",
+                "users": 1,
+                "_id": 0
+            }
+        },
+        {
+            "$sort": {"date": 1}
+        }
+    ]
+
+    totals_per_day = list(reward_collection.aggregate(pipeline))
+
+    return jsonify(totals_per_day), 200
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
