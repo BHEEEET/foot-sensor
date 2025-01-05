@@ -13,7 +13,8 @@ CORS(app, resources={r"/api/*": {"origins": "http://127.0.0.1:4200"}})
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
 client = MongoClient(MONGO_URI)
 db = client["foot-sensor"]  # Replace with your database name
-collection = db["sensor"]  # Replace with your collection name
+sensor_collection = db["sensor"]  # Replace with your collection name
+reward_collection = db["rewards"]  # Replace with your collection name
 
 @app.route('/api/data', methods=['POST'])
 def save_data():
@@ -22,15 +23,13 @@ def save_data():
     if not data:
         return jsonify({"error": "Invalid or missing JSON data"}), 400
     
-    time_stamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    data["timestamp"] = time_stamp
-
-    collection.insert_one(data)
+    sensor_collection.insert_one(data)
     return jsonify({"message": "Data saved successfully"}), 200
+
     
 @app.route('/api/data', methods=['GET'])
 def get_data():
-    documents = list(collection.find({}, {"_id": 0}))
+    documents = list(sensor_collection.find({}, {"_id": 0}))
     return jsonify(documents), 200
 
 @app.route('/api/data/count', methods=['GET'])
@@ -62,10 +61,27 @@ def get_data_count():
     ]
     
     # Perform aggregation query
-    result = list(collection.aggregate(pipeline))
+    result = list(sensor_collection.aggregate(pipeline))
     
     return jsonify(result), 200
 
+@app.route('/api/reward', methods=['GET'])
+def get_rewards():
+    # Fetch all reward records
+    rewards = list(reward_collection.find({}, {"_id": 0}))
+    return jsonify(rewards), 200
+
+
+@app.route('/api/reward', methods=['POST'])
+def handle_reward():
+    data = request.json
+    
+    if not data:
+        return jsonify({"error": "Invalid or missing reward data"}), 400
+    
+    reward_collection.insert_one(data)
+    
+    return jsonify({"message": "Reward granted successfully"}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
