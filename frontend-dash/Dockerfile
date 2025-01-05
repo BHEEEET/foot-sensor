@@ -1,21 +1,26 @@
-# Use Node.js as base image
+# Use a lightweight Node.js base image
 FROM node:21-alpine
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
 # Install Angular CLI globally
 RUN npm install -g @angular/cli@18.0.0
 
-# Disable Google Analystics Pop-up
+# Disable Google Analytics Pop-up
 ENV NG_CLI_ANALYTICS false
 
-# Copy the application code
-COPY . .
+# Copy only package.json and package-lock.json first for better caching
+COPY package*.json ./
 
+# Install dependencies
 RUN npm install
 
-# Expose port 4200 and start the Angular development server
+# Copy the rest of the application code
+COPY . .
+
+# Expose port 4200 for the Angular development server
 EXPOSE 4200
 
+# Start the Angular development server
 CMD ["ng", "serve", "--host", "0.0.0.0"]
