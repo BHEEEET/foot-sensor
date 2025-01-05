@@ -1,48 +1,49 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // To use Angular directives like `ngIf`, `ngFor`
-import { SensorDataService } from '../sensor-data.service'; // Import the service
+import { CommonModule } from '@angular/common';
+import { SensorDataService } from '../sensor-data.service';
 
 @Component({
   selector: 'app-sensor-display',
   standalone: true,
-  imports: [CommonModule], // Import modules directly
+  imports: [CommonModule],
   templateUrl: './sensor-display.component.html',
   styleUrls: ['./sensor-display.component.css'],
 })
 export class SensorDisplayComponent implements OnInit {
-  sensorData: any; // This will hold the fetched data
+  sensorData: any;
   dataCount: any;
+  usersPoints: any;
+  usersPointsPerDay: any;
+  rewardLog: any;
+  userCount: any;
 
-  constructor(private sensorDataService: SensorDataService) {}
+  constructor(private sensorDataService: SensorDataService) { }
 
   ngOnInit(): void {
-    this.getSensorData();
-    this.getDataCount();
+    this.fetchData('sensorData', this.sensorDataService.getSensorData(), true);
+    this.fetchData('dataCount', this.sensorDataService.getDataCount());
+    this.fetchData('usersPoints', this.sensorDataService.getUsersPoints());
+    this.fetchData('usersPointsPerDay', this.sensorDataService.getUsersPointsPerDay());
+    this.fetchData('rewardLog', this.sensorDataService.getRewardLog(),true);
+    this.fetchData('userCount', this.sensorDataService.getUserCount())
   }
 
   /**
-   * Fetches sensor data using the SensorDataService.
+   * Centralized subscription logic for handling observable data.
+   * @param property Component property to assign the data to.
+   * @param observable The observable to subscribe to.
+   * @param reverse Optional flag to reverse the data array (default: false).
    */
-  getSensorData(): void {
-    this.sensorDataService.getSensorData().subscribe(
-      (data) => {
-        this.sensorData = data.reverse(); // Reverse the order
+  private fetchData(property: keyof this, observable: any, reverse: boolean = false): void {
+    observable.subscribe({
+      next: (data: any) => {
+        // Convert property to string for dynamic assignment
+        (this as any)[String(property)] = reverse && Array.isArray(data) ? data.reverse() : data;
       },
-      (error) => {
-        console.error('Error fetching sensor data:', error);
-      }
-    );
+      error: (error: any) => {
+        console.error(`Error fetching ${String(property)}:`, error);
+      },
+    });
   }
 
-  
-  getDataCount(): void {
-    this.sensorDataService.getDataCount().subscribe(
-      (data) => {
-        this.dataCount = data; // Assign the fetched data to the component property
-      },
-      (error) => {
-        console.error('Error fetching sensor data:', error);
-      }
-    );
-  }
 }

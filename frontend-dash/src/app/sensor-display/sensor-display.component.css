@@ -1,121 +1,166 @@
-/* Global container */
+/* Global Container */
 .container {
     font-family: 'Arial', sans-serif;
-    min-height: 90vh;
-    position: relative;
-    margin-left: 3vw;
-    margin-top: 1vh;
-}
-
-/* Sensor table Table */
-.sensor-dagelijks {
-    position: absolute;
-    top: 0;
-    left: 0;
-    max-width: 30vw;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px 8px 0 0;
+    display: grid;
+    grid-template-areas:
+        "sensor-dagelijks punten-dagelijks sensor-punten"
+        "sensor-log-container sensor-dagelijks-user sensor-dagelijks-user"
+        "reward-log-container sensor-dagelijks-user sensor-dagelijks-user";
+    grid-template-columns: repeat(3, 1fr);
+    /* Equal columns */
+    grid-template-rows: auto 1fr 1fr;
+    /* Two rows: auto for content, 1fr for logs */
+    gap: 3rem;
+    max-height: 85vh;
+    margin: 1vh 3vw;
     padding: 1rem;
+    box-sizing: border-box;
 }
 
-.sensor-table {
-    width: 19vw;
-    margin-top: 1rem;
-    border-collapse: collapse;
-    font-size: 10px;
-}
-
-.sensor-table th,
-.sensor-table td {
-    border: 1px solid #ccc;
-    padding: 0.5rem;
-    text-align: left;
-}
-
-.sensor-table th {
-    background-color: #e0f2f1;
-    font-weight: bold;
-}
-
-/* Header styling */
+/* Headers */
 h1,
 h2 {
-    margin-top: 0;
+    margin: 0 0 1rem;
     color: #333;
     text-align: center;
     font-size: 1.2rem;
-    margin-bottom: 1rem;
 }
 
-/* Sensor table Table */
-.sensor-table {
-    width: 100%;
-    margin-top: 1rem;
-    border-collapse: collapse;
-    font-size: 1rem;
-    overflow-y: auto;
-}
-
-.sensor-table th,
-.sensor-table td {
-    border: 1px solid #ccc;
-    padding: 0.5rem;
-    text-align: left;
-}
-
-.sensor-table th {
-    background-color: #e0f2f1;
-    font-weight: bold;
-}
-
-.sensor-table tr:nth-child(even) {
-    background-color: #fafafa;
-}
-
-/* Sensor Log Container */
-.sensor-log-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding: 1rem;
-    max-width: 30vw;
+/* Sensor Sections */
+.sensor-dagelijks {
+    grid-area: sensor-dagelijks;
+    /* Assigned position */
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px 8px 0 0;
-    width: 100%;
+    border-radius: 8px;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
-/* Sensor Log Styling */
-.sensor-log {
+.punten-dagelijks {
+    grid-area: punten-dagelijks;
+    /* Assigned position */
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.sensor-punten {
+    grid-area: sensor-punten;
+    /* Assigned position */
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.sensor-dagelijks-user{
+    grid-area: sensor-dagelijks-user;
+    /* Assigned position */
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* Log Sections */
+.sensor-log-container {
+    grid-area: sensor-log-container;
+    /* Assigned position */
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.reward-log-container {
+    grid-area: reward-log-container;
+    /* Assigned position */
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 1rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+    border: 1px solid #ddd; /* Adds a subtle border to the table */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Adds a light shadow for a modern look */
+    border-radius: 8px; /* Rounds table edges */
+    overflow: hidden; /* Ensures rounded edges for content */
+}
+
+table th,
+table td {
+    padding: 0.75rem 1rem; /* Increases padding for better spacing */
+    text-align: left;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eee; /* Adds a light border for row separation */
+}
+
+table th {
+    background-color: #41b886; /* Modern, vibrant header color */
+    color: #ffffff; /* Ensures text is readable on colored background */
+    font-weight: 600; /* Slightly bolder for emphasis */
+    text-transform: uppercase; /* Adds a modern touch with uppercase text */
+    letter-spacing: 0.05em; /* Adds spacing for elegance */
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Keeps even rows subtle */
+}
+
+table tr:hover {
+    background-color: #f1f8f7; /* Adds hover effect for better interactivity */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+
+/* Logs */
+.sensor-log,
+.reward-log {
     max-height: 15vh;
     overflow-y: auto;
-    font-family: Arial, sans-serif;
-    border: 1px solid #ccc; /* Optional: Add a border for emphasis */
+    border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #fafafa; /* Subtle background */
-    padding: 0.8rem; /* Reduced padding inside */
+    background-color: #fafafa;
+    padding: 0.8rem;
+    box-sizing: border-box;
 }
 
+/* Log Entries */
 .log-entry {
-    font-size: 0.85rem; /* Slightly smaller font size */
-    border-bottom: 1px solid #e0e0e0; /* Light divider for readability */
-    line-height: 1; /* Compact line spacing */
+    font-size: 0.85rem;
+    border-bottom: 1px solid #e0e0e0;
+    line-height: 1.2;
+}
+
+.log-entry span{
+    margin-left: 0.5rem;
 }
 
 .log-entry:last-child {
-    border-bottom: none; /* Remove the last border */
+    border-bottom: none;
 }
 
-.log-entry span {
-    overflow: hidden; /* Ensure text doesn't overflow */
-    text-overflow: ellipsis; /* Add ellipsis for long text */
-    white-space: nowrap; /* Prevent wrapping */
-    color: #338399;
-    padding-right: 0.1rem;
+.timestamp {
+    color: rgb(47, 120, 176);
 }
 
-.log-entry .sensor {
+.log-entry .sensor,
+.points {
     color: #2e7d32;
 }
 
@@ -128,29 +173,26 @@ h2 {
     font-weight: bold;
 }
 
-/* Loading Text */
-ng-template {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #888;
-    margin-top: 1.5rem;
+.log-entry .name,
+.user {
+    color: #7f12a3;
 }
 
-/* Loading spinner */
+/* Loading screen */
 .loading-container {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
-    margin-top: 3rem;
     text-align: center;
+    background-color: white;
+    grid-area: 1 / 1 / 2 / 4;
+    /* Ensure it spans the entire grid */
 }
 
 .spinner {
     border: 8px solid #f3f3f3;
-    /* Light gray background */
     border-top: 8px solid #00796b;
-    /* Green for the spinner */
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -158,7 +200,12 @@ ng-template {
     margin-bottom: 1rem;
 }
 
-/* Spinner animation */
+.loading-container p {
+    font-size: 1.2rem;
+    color: #00796b;
+    font-weight: bold;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -169,70 +216,46 @@ ng-template {
     }
 }
 
-/* Loading text */
-.loading-container p {
-    font-size: 1.2rem;
-    color: #00796b;
-    font-weight: bold;
-    margin-top: 0.5rem;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
-        margin-left: 1vw;
-        margin-top: 1vh;
+        grid-template-areas:
+            "sensor-dagelijks punten-dagelijks"
+            "sensor-punten sensor-dagelijks-user""
+            "sensor-log-container reward-log-container";
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+    }
+
+    .sensor-dagelijks,
+    .punten-dagelijks,
+    .sensor-punten,
+    .sensor-log-container,
+    .reward-log-container {
         padding: 0.5rem;
     }
 
-    .sensor-dagelijks {
-        padding: 0.5rem;
+    table th,
+    table td {
         font-size: 0.9rem;
-    }
-
-    .sensor-log-container {
-        padding: 0.5rem;
-        font-size: 0.9rem;
-    }
-
-    .sensor-table {
-        font-size: 10px;
-    }
-
-    h1, h2 {
-        font-size: 1rem;
-    }
-
-    .spinner {
-        width: 40px;
-        height: 40px;
-    }
-
-    .loading-container p {
-        font-size: 1rem;
     }
 }
 
 @media (max-width: 480px) {
-    .sensor-dagelijks, .sensor-log-container {
+    .container {
+        margin: 1vh 1vw;
+    }
+
+    .sensor-dagelijks,
+    .punten-dagelijks,
+    .sensor-punten,
+    .sensor-log-container,
+    .reward-log-container {
         padding: 0.5rem;
     }
 
-    .sensor-table th, .sensor-table td {
-        font-size: 8px;
-        padding: 0.3rem;
-    }
-
-    h1, h2 {
-        font-size: 0.9rem;
-    }
-
-    .spinner {
-        width: 30px;
-        height: 30px;
-    }
-
-    .loading-container p {
-        font-size: 0.9rem;
+    table th,
+    table td {
+        font-size: 0.8rem;
     }
 }

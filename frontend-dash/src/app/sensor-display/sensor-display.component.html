@@ -1,15 +1,12 @@
 <div class="container">
-  <div *ngIf="sensorData && dataCount; else loading">
-    <!-- Main content -->
+  <ng-container *ngIf="sensorData && dataCount; else loading">
     <div class="sensor-dagelijks">
-      <h1>Dagelijkse Data</h1>
-
-      <!-- Summary Table -->
+      <h1>Dagelijkse Fouten</h1>
       <table class="sensor-table">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Count</th>
+            <th>Datum</th>
+            <th>Aantal</th>
           </tr>
         </thead>
         <tbody>
@@ -21,22 +18,106 @@
       </table>
     </div>
 
-    <!-- Sensor Log -->
+    <div class="punten-dagelijks">
+      <h1>Dagelijkse punten per persoon</h1>
+      <table class="punten-dagelijks-table">
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Gebruiker</th>
+            <th>Punten</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let pointsDay of usersPointsPerDay">
+            <tr>
+              <td [attr.rowspan]="pointsDay.users.length">{{ pointsDay.date }}</td>
+              <td>{{ pointsDay.users[0].user }}</td>
+              <td>{{ pointsDay.users[0].total_points }}</td>
+            </tr>
+            <tr *ngFor="let user of pointsDay.users.slice(1)">
+              <td>{{ user.user }}</td>
+              <td>{{ user.total_points }}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sensor-punten">
+      <h1>Totale Punten</h1>
+      <table class="sensor-punten-table">
+        <thead>
+          <tr>
+            <th>Naam</th>
+            <th>Punten</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of usersPoints">
+            <td>{{ user.user }}</td>
+            <td>{{ user.total_points }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sensor-dagelijks-user">
+      <h1>Dagelijkse Fouten per persoon</h1>
+      <table class="dagelijks-user-table">
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Gebruiker</th>
+            <th>Aantal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loop through each date -->
+          <ng-container *ngFor="let day of userCount">
+            <!-- Display date row with rowspan -->
+            <tr>
+              <td [attr.rowspan]="day.users.length">{{ day.date ? day.date : 'Geen Datum' }}</td>
+              <td>{{ day.users[0]?.user || 'Onbekend' }}</td>
+              <td>{{ day.users[0]?.count }}</td>
+            </tr>
+            <!-- Additional rows for remaining users -->
+            <tr *ngFor="let user of day.users.slice(1)">
+              <td>{{ user.user || 'Onbekend' }}</td>
+              <td>{{ user.count }}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    
+
+
     <div class="sensor-log-container">
       <h2>Sensor Log</h2>
       <div class="sensor-log">
-        <!-- Iterate over sensor data and display each entry in one line -->
         <div *ngFor="let data of sensorData" class="log-entry">
           <span class="timestamp">{{ data.timestamp }}</span>
           <span class="sensor">{{ data.sensor }}</span>
           <span class="value">{{ data.sensor_value }}</span>
           <span class="id">id:{{ data.id }}</span>
+          <span class="name">{{ data.name }}</span>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Loading Message with Spinner -->
+    <div class="reward-log-container">
+      <h2>Reward Log</h2>
+      <div class="reward-log">
+        <div *ngFor="let reward of rewardLog" class="log-entry">
+          <span class="timestamp">{{ reward.timestamp }}</span>
+          <span class="points">Points: {{ reward.points }}</span>
+          <span class="user">User: {{ reward.user }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
   <ng-template #loading>
     <div class="loading-container">
       <div class="spinner"></div>
