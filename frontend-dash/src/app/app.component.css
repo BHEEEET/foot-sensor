@@ -4,10 +4,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 2rem;
-    background: linear-gradient(45deg, #00695c, #004d40);
+    background: linear-gradient(45deg, #007b6d, #00715e);
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-bottom: 2px solid #004d40;
+    border-bottom: 2px solid #007c68;
     font-family: 'Arial', sans-serif;
 }
 
@@ -39,11 +39,11 @@
 }
 
 .navbar-button:hover {
-    background: linear-gradient(45deg, #00796b, #004d40);
+    background: linear-gradient(45deg, #008071, #004d40);
     color: white;
     transform: scale(1.1);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-    border: 2px solid #004d40;
+    border: 2px solid #006050;
 }
 
 .navbar-button:active {
